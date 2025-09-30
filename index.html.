@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Hot Wheels sorpresa</title>
+<style>
+:root{--bg:#072b57;--btn-bg:#fff6df;--btn-t:#072b57}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:white;display:flex;align-items:flex-start;justify-content:center}
+.container{width:100%;max-width:420px;padding:24px;text-align:center}
+#start{margin-top:120px;padding:22px 44px;font-size:24px;border-radius:34px;border:none;background:var(--btn-bg);color:var(--btn-t);box-shadow:0 10px 20px rgba(0,0,0,.25);cursor:pointer}
+#sorpresa{display:none;position:relative;height:320px;margin-top:20px;overflow:hidden}
+#car{position:absolute;left:-160px;bottom:60px;width:160px;opacity:0}
+.launch #car{animation:drive 1.6s cubic-bezier(.2,.9,.2,1) forwards;opacity:1}
+@keyframes drive{
+  0%{left:-160px;transform:rotate(0) scale(1)}
+  60%{left:55%;transform:rotate(-8deg) scale(1.05)}
+  100%{left:120%;transform:rotate(0) scale(1)}
+}
+#meta{display:none;margin-top:16px}
+.fadeIn{animation:fade .5s ease forwards}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+  <div class="container">
+    <button id="start">apreta aquí</button>
+
+    <div id="sorpresa" aria-hidden="true">
+      <!-- GIF de Hot Wheels -->
+      <img id="car" src="https://i.gifer.com/7iG.gif" alt="Hot Wheels" />
+
+      <div id="meta"><h1>🚗🩷 Meta final: Tú 🩷🚗</h1></div>
+    </div>
+  </div>
+
+<script>
+const start = document.getElementById('start');
+const sorpresa = document.getElementById('sorpresa');
+const car = document.getElementById('car');
+const meta = document.getElementById('meta');
+
+start.addEventListener('click', ()=>{
+  start.style.display='none';
+  sorpresa.style.display='block';
+  void sorpresa.offsetWidth; 
+  sorpresa.classList.add('launch');
+
+  car.addEventListener('animationend', ()=> {
+    meta.style.display='block';
+    meta.classList.add('fadeIn');
+  }, { once:true });
+});
+</script>
+</body>
+</html>
