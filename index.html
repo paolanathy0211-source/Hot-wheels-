@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Hot Wheels Sorpresa</title>
+<style>
+:root{
+  --bg:#072b57;
+  --btn-bg:#fff6df;
+  --btn-t:#072b57;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  background:var(--bg);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  color:white;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+.container{
+  width:100%;
+  max-width:420px;
+  padding:24px;
+  text-align:center;
+}
+#start{
+  margin-top:120px;
+  padding:22px 44px;
+  font-size:24px;
+  border-radius:34px;
+  border:none;
+  background:var(--btn-bg);
+  color:var(--btn-t);
+  box-shadow:0 10px 20px rgba(0,0,0,.25);
+  cursor:pointer;
+}
+#sorpresa{display:none;position:relative;height:400px;margin-top:20px;overflow:hidden}
+.car{
+  position:absolute;
+  width:120px;
+  opacity:0;
+  bottom:60px;
+}
+#car1{left:-150px;}
+#car2{left:-150px;bottom:120px;}
+#car3{left:-150px;bottom:180px;}
+.launch .car{
+  animation:drive 2s cubic-bezier(.2,.9,.2,1) forwards;
+  opacity:1;
+}
+@keyframes drive{
+  0%{transform:translateX(0) rotate(0) scale(1);}
+  50%{transform:translateX(55vw) rotate(-8deg) scale(1.05);}
+  100%{transform:translateX(120vw) rotate(0) scale(1);}
+}
+#ramo{
+  display:none;
+  margin-top:20px;
+}
+#ramo img{
+  width:60px;
+  margin:5px;
+  border-radius:8px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+#mensaje{display:none;margin-top:16px;font-size:32px;color:#ffdd57;}
+.fadeIn{animation:fade .8s ease forwards;}
+@keyframes fade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+  <div class="container">
+    <button id="start">Apreta aquí</button>
+
+    <div id="sorpresa" aria-hidden="true">
+      <!-- Carritos Hot Wheels -->
+      <img id="car1" class="car" src="https://i.gifer.com/7iG.gif" alt="Hot Wheels 1" />
+      <img id="car2" class="car" src="https://i.gifer.com/7iG.gif" alt="Hot Wheels 2" />
+      <img id="car3" class="car" src="https://i.gifer.com/7iG.gif" alt="Hot Wheels 3" />
+
+      <!-- Ramo de fotos -->
+      <div id="ramo">
+        <img src="https://www.hotwheels.com/images/cars/car1.png" alt="Foto 1"/>
+        <img src="https://www.hotwheels.com/images/cars/car2.png" alt="Foto 2"/>
+        <img src="https://www.hotwheels.com/images/cars/car3.png" alt="Foto 3"/>
+      </div>
+
+      <!-- Mensaje final -->
+      <div id="mensaje">🩷 Te amo 🩷</div>
+    </div>
+  </div>
+
+<script>
+const start = document.getElementById('start');
+const sorpresa = document.getElementById('sorpresa');
+const cars = document.querySelectorAll('.car');
+const ramo = document.getElementById('ramo');
+const mensaje = document.getElementById('mensaje');
+
+start.addEventListener('click', ()=>{
+  start.style.display='none';
+  sorpresa.style.display='block';
+  void sorpresa.offsetWidth; 
+  sorpresa.classList.add('launch');
+
+  // Espera a que los carritos terminen la animación
+  cars[cars.length-1].addEventListener('animationend', ()=> {
+    ramo.style.display='block';
+    ramo.classList.add('fadeIn');
+
+    setTimeout(()=>{
+      mensaje.style.display='block';
+      mensaje.classList.add('fadeIn');
+    }, 800); // espera a que aparezca el ramo
+  }, { once:true });
+});
+</script>
+</body>
+</html>
